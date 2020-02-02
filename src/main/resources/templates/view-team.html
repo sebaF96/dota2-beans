@@ -41,7 +41,7 @@
                                         <li th:text="'Team Winrate: ' + ${teamdata.getWinrate()} + ' %'" class="list-group-item list-group-item-info"></li>
                                     </ul>
                                     <div class="card-body">
-                                        <a href="#" class="btn btn-danger">Unfollow</a>
+                                        <a th:href="@{/delete/{id}(id=${team.team_id})}" class="btn btn-danger">Unfollow</a>
                                     </div>
                                 </div>
 
@@ -67,11 +67,16 @@
 
                         <tr th:each="match : ${matches}">
 
-                            <td th:text="${team.name}">Secret</td>
-                            <td th:text="${match.opposing_team_name}">39</td>
+                            <td>
+                                <img th:src="${team.logo_url}" style="width: 70px; height: 70px">
+                            </td>
+                            <td>vs.</td>
+                            <td>
+                                <img th:src="${match.opposing_team_logo}" style="width: 70px; height: 70px">
+                            </td>
                             <td th:switch="${match.radiant_win}">
-                                <p th:case="true" style="color: green"> Win </p>
-                                <p th:case="false" style="color: red"> Loss</p>
+                                <p th:case="true" style="color: limegreen"> <b> Win </b></p>
+                                <p th:case="false" style="color: indianred"><b>Loss </b></p>
                             </td>
                             <td th:text="${match.league_name}"></td>
                             <td th:text="${match.formattedTime}"></td>
