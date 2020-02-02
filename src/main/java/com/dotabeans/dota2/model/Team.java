@@ -23,8 +23,6 @@ public class Team implements Serializable {
     private String name;
     @Column(name = "avatar_url")
     private String logo_url;
-    @OneToMany(mappedBy = "team")
-    private List<Player> players;
 
     public Team(Long team_id) {
         this.team_id = team_id;
