@@ -1,0 +1,33 @@
+h1{
+    font-family: 'Raleway', sans-serif;
+    color: #1ba94c;
+    text-shadow: 4px 4px 4px #aaa;
+    font-size: 100px;
+    text-align: center;
+}
+
+.card{
+    border: 2px solid #1ba94c ;
+}
+
+.card-title{
+    font-family: 'Raleway', sans-serif;
+    color: #1ba94c;
+    text-shadow: 4px 4px 4px #aaa;
+}
+
+#head_roster{
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    color: #1ba94c;
+    font-size: 25px;
+    text-shadow: 4px 4px 4px #aaa;
+
+}
+
+#beans{
+    font-family: 'Raleway', sans-serif;
+    color: #1ba94c;
+    font-size: 25px;
+    text-shadow: 4px 4px 4px #aaa;
+}

@@ -1,53 +1,45 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Thymeleaf template</title>
+    <title>Add team</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
 </head>
 
 <body>
 
+<div th:replace="header.html :: navbar"></div>
 
-<div class="container my-5">
-    <h3>Add Team</h3>
-    <div class="card">
-        <div class="card-body">
-            <div class="col-md-10">
-                <form action="#" th:action="@{/add}" th:object="${team}" method="post">
-                    <div class="row">
-                        <div class="form-group col-md-8">
-                            <label for="id" class="col-form-label">OpenDota ID</label> <input type="text" th:field="*{team_id}" class="form-control" id="id" placeholder="OpenDota ID"> <span th:if="${#fields.hasErrors('team_id')}" th:errors="*{team_id}" class="text-danger"></span>
-                        </div>
-                        <p>Be sure the ID is ok.</p>
-
-                        <div class="col-md-6">
-                            <input type="submit" class="btn btn-primary" value="Add Team">
-                        </div>
-
-                        <div class="form-group col-md-8"></div>
-
-                    </div>
-                </form>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Add Team</h1>
         </div>
     </div>
+
+
+
+                <form action="#" th:action="@{/add}" th:object="${team}" method="post">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="form-group col-md-4">
+                            <label for="id" class="col-form-label">OpenDota ID</label> <input type="text" th:field="*{team_id}" class="form-control" id="id" placeholder="OpenDota ID"> <span th:if="${#fields.hasErrors('team_id')}" th:errors="*{team_id}" class="text-danger"></span>
+                            <hr>
+                            <input type="submit" class="btn btn-success" value="Add Team">
+                        </div>
+
+                        <div class="col-md-4"></div>
+                    </div>
+                </form>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
+<div th:replace="header.html :: footer"></div>
+
 
 </body>
 </html>
