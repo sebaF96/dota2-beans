@@ -13,34 +13,56 @@
 
     <div class="row">
         <div class="col-md-12" style="text-align: center">
-            <h1 th:text="${teamdata.name}">team title</h1>
+            <h1 th:text="${teamdata.name}" style="font-size: 60px">team title</h1>
+            <hr>
         </div>
     </div>
 
         <div class="row">
 
-            <div class="col-md-2"></div>
 
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-6">
-                    <img th:src="${team.getLogo_url()}" style="background-color: black">
+
+                    <div class="col-md-5">
+
+
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="card" style="width: 18rem;">
+                                    <img th:src="${team.getLogo_url()}" class="card-img-top" alt="Card image cap" style="background-color: black">
+                                    <div class="card-body">
+                                        <h3 th:text="${team.name}" class="card-title"></h3>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li th:text="'Team Wins: ' + ${teamdata.getWins()}" class="list-group-item list-group-item-success"></li>
+                                        <li th:text="'Team Losses: ' + ${teamdata.getLosses()}" class="list-group-item list-group-item-danger"></li>
+                                        <li th:text="'Team Rating: ' + ${teamdata.getRating()}" class="list-group-item list-group-item-warning"></li>
+                                        <li th:text="'Team Winrate: ' + ${teamdata.getWinrate()} + ' %'" class="list-group-item list-group-item-info"></li>
+                                    </ul>
+                                    <div class="card-body">
+                                        <a href="#" class="btn btn-danger">Unfollow</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-5">
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-success" style="text-align: center"> Roster </li>
+                                    <li class="list-group-item">Player 1</li>
+                                    <li class="list-group-item">Player 2</li>
+                                    <li class="list-group-item">Player 3</li>
+                                    <li class="list-group-item">Player 4</li>
+                                    <li class="list-group-item">Player 5</li>
+                                </ul>
+                            </div>
+                        </div>
+
+
                     </div>
 
-                    <div class="col-md-6">
-                        <p th:text="'Wins: ' + ${teamdata.getWins()}" style="color: green"></p>
-                        <p th:text="'Losses: ' + ${teamdata.getLosses()}" style="color: red"></p>
-                        <p th:text="'Rating: ' + ${teamdata.getRating()}"></p>
-                        <p th:text="'Winrate: ' + ${teamdata.getWinrate()} + ' %'"></p>
+                    <div class="col-md-7">
 
-
-
-                    </div>
-
-                    </div>
-
-                <div class="row">
-                    <div class="col-md-12">
                     <table class="table table-striped table-dark">
 
                         <tr th:each="match : ${matches}">
@@ -67,9 +89,6 @@
 
                 </div>
 
-
-
-            <div class="col-md-2"></div>
 
         </div>
 
