@@ -55,11 +55,10 @@
                             <div class="col-md-5">
                                 <ul class="list-group">
                                     <li class="list-group-item" id="head_roster"> Roster </li>
-                                    <li class="list-group-item">Player 1</li>
-                                    <li class="list-group-item">Player 2</li>
-                                    <li class="list-group-item">Player 3</li>
-                                    <li class="list-group-item">Player 4</li>
-                                    <li class="list-group-item">Player 5</li>
+                                    <th:block th:each="player : ${players}">
+                                        <li th:text="${player.name}" class="list-group-item"> rtz </li>
+                                    </th:block>
+
                                 </ul>
                             </div>
                         </div>

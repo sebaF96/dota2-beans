@@ -36,6 +36,9 @@ public class GetTeamData {
         List<TeamData> teams = gson.fromJson(sb.toString(), new TypeToken<List<TeamData>>(){}.getType());
         teams.sort(Comparator.comparing(TeamData::getWins));
         Collections.reverse(teams);
-        return teams.stream().filter(t -> t.getWins() > 115).collect(Collectors.toList());
+        return teams.stream().
+                filter(t -> t.getLast_match_time() > 1577836800)    // Teams that have played this year (2020)
+                .filter(t -> t.getWins() > 49)
+                .collect(Collectors.toList());
     }
 }

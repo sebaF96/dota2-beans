@@ -1,7 +1,6 @@
 package com.dotabeans.dota2.model;
 
 import lombok.*;
-import org.springframework.beans.factory.annotation.Required;
 
 @Getter
 @Setter

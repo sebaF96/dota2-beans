@@ -2,9 +2,11 @@ package com.dotabeans.dota2.controller;
 
 import com.dotabeans.dota2.gsonUtils.GetMatchesTeamData;
 import com.dotabeans.dota2.gsonUtils.GetTeamData;
+import com.dotabeans.dota2.gsonUtils.GetPlayerData;
 import com.dotabeans.dota2.model.MatchTeamData;
 import com.dotabeans.dota2.model.Team;
 import com.dotabeans.dota2.model.TeamData;
+import com.dotabeans.dota2.model.PlayerData;
 import com.dotabeans.dota2.repository.TeamRepository;
 import com.dotabeans.dota2.utils.utilFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,7 @@ public class TeamController {
         List<MatchTeamData> matches = GetMatchesTeamData.returnTeamMatchesList(id);
         Optional<Team> team = teamRepository.findById(id);
         TeamData teamData = GetTeamData.returnTeamData(id);
+        List<PlayerData> players = GetPlayerData.getPlayersByTeamId(id);
 
         for (MatchTeamData match : matches) {
             match.setRadiant_win(match.getRadiant() == match.getRadiant_win());
@@ -56,7 +59,7 @@ public class TeamController {
         model.addAttribute("team", team.get());
         model.addAttribute("teamdata", teamData);
         model.addAttribute("matches", matches);
-
+        model.addAttribute("players", players);
 
         return "view-team";
 
@@ -100,7 +103,7 @@ public class TeamController {
         team.setLogo_url(teamData.getLogo_url());
 
         teamRepository.save(team);
-        return new RedirectView("");
+        return new RedirectView("/" + team.getTeam_id());
     }
 
     @GetMapping("delete/{id}")
