@@ -20,7 +20,26 @@ public class MatchTeamData {
     private String opposing_team_name;
     private String opposing_team_logo;
     private String formattedTime;
+    private String actualTeamLogo;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MatchTeamData)) return false;
 
+        MatchTeamData that = (MatchTeamData) o;
 
+        if (!getMatch_id().equals(that.getMatch_id())) return false;
+        if (!getRadiant_win().equals(that.getRadiant_win())) return false;
+        if (!getStart_time().equals(that.getStart_time())) return false;
+        return getLeague_name().equals(that.getLeague_name());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getMatch_id().hashCode();
+        result = 31 * result + getRadiant_win().hashCode();
+        result = 31 * result + getStart_time().hashCode();
+        return result;
+    }
 }

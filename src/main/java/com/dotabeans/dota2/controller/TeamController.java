@@ -20,8 +20,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -54,7 +53,7 @@ public class TeamController {
             match.setFormattedTime(utilFunctions.formatDate(match.getStart_time()));
         }
 
-        teamData.setWinrate(teamData.getWins() * 100 / (teamData.getWins() +  teamData.getLosses()));
+        teamData.setWinrate(teamData.getWins() * 100 / (teamData.getWins() + teamData.getLosses()));
 
         model.addAttribute("team", team.get());
         model.addAttribute("teamdata", teamData);
@@ -79,6 +78,33 @@ public class TeamController {
 
         model.addAttribute("teams", teams);
         return "list-teams";
+    }
+
+    @GetMapping("/matches")
+    public String getRecentMatches(Model model) throws IOException {
+        List<Long> idsMyTeams = teamRepository.findAll().stream().map(Team::getTeam_id).collect(Collectors.toList());
+        ArrayList<MatchTeamData> matches = new ArrayList<>();
+
+        for (Long id : idsMyTeams) {
+            ArrayList<MatchTeamData> matchesByTeam = (ArrayList<MatchTeamData>) GetMatchesTeamData.returnTeamMatchesList(id);
+            for(int i = 0; i < 10; i++){
+                matchesByTeam.get(i).setActualTeamLogo(teamRepository.findById(id).get().getLogo_url());
+                matchesByTeam.get(i).setRadiant_win(matchesByTeam.get(i).getRadiant() && matchesByTeam.get(i).getRadiant_win());
+                matchesByTeam.get(i).setFormattedTime(utilFunctions.formatDate(matchesByTeam.get(i).getStart_time()));
+                matches.add(matchesByTeam.get(i));
+            }
+        }
+
+        assert false;
+        matches.sort(Comparator.comparing(MatchTeamData::getStart_time));
+        List<MatchTeamData> matchesFinal = matches.stream().distinct().collect(Collectors.toList());
+        Collections.reverse(matchesFinal);
+        matches.clear();
+
+        matches = (ArrayList<MatchTeamData>) matchesFinal.stream().limit(50).collect(Collectors.toList());
+
+        model.addAttribute("matches", matches);
+        return "recent_matches";
     }
 
     @GetMapping("/new_team")
