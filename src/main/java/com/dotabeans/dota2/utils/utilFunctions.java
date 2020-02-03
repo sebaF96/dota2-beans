@@ -20,7 +20,7 @@ public class utilFunctions {
         String inputLine;
         StringBuilder sb = new StringBuilder();
 
-        while((inputLine = in.readLine()) != null){
+        while ((inputLine = in.readLine()) != null) {
             sb.append(inputLine);
         }
         in.close();
@@ -28,13 +28,28 @@ public class utilFunctions {
         return sb;
     }
 
-    public static String formatDate(Long timestamp){
-        DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate localDate = LocalDate.ofEpochDay(timestamp / 86400);
-        // ofEpochDay() function waits for DAYS since 1-1-1970 and timestamp is given in
-        // SECONDS so we divide by 86400 (seconds in 1 day)
+    public static String formatDate(Long timestamp) {
 
-        return FORMATTER.format(localDate);
+        Long time_now = (System.currentTimeMillis() / 1000);
+        long time_ago = time_now - timestamp;
+
+        if (time_ago >= 86400) {
+            int days = (int) (time_ago / 86400);
+            return "" + days + "d ago";
+        }
+
+        if (time_ago >= 3600) {
+            int hours = (int) (time_ago / 3600);
+            return "" + hours + "h ago";
+        }
+
+        if (time_ago >= 60) {
+            int minutes = (int) (time_ago / 60);
+            return "" + minutes + "min ago";
+        }
+
+        return "" + time_ago + "sec ago";
+
 
     }
 }
