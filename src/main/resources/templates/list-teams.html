@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dota 2 beans - Teams</title>
+    <title>Beans - Teams</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -9,6 +9,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
     <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link rel="icon" th:href="@{/images/spring_logo.png}">
 
 </head>
 
@@ -31,13 +32,13 @@
             <table class="table table-dark table-striped">
                 <thead>
                 <tr>
-                    <td>Logo</td>
-                    <td>Name</td>
-                    <td>Rating</td>
-                    <td>Wins</td>
-                    <td>Loses</td>
-                    <td>Last match</td>
-                    <td>Add</td>
+                    <td style="color: #1ba94c"><b>Logo </b></td>
+                    <td style="color: #1ba94c"><b>Name</b></td>
+                    <td style="color: #1ba94c"><b>Rating</b></td>
+                    <td style="color: #1ba94c"><b>Wins</b></td>
+                    <td style="color: #1ba94c"><b>Loses</b></td>
+                    <td style="color: #1ba94c"><b>Last match</b></td>
+                    <td style="color: #1ba94c"><b>Add</b></td>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,13 +46,13 @@
                     <td style="width: 150px">
                         <img th:src="${team.logo_url}" style="width: 80px; height: 80px">
                     </td>
-                    <td th:text="${team.name}">Secret</td>
-                    <td th:text="${team.rating}">1400</td>
-                    <td th:text="${team.wins}" style="color: #1ba94c">900</td>
-                    <td th:text="${team.losses}" style="color: indianred"></td>
-                    <td th:text="${team.formattedDate}"></td>
-                    <td th:switch="${team.following}">
-                        <a th:case="false" th:href="@{/new_team/{id}(id=${team.team_id})}" class="btn btn-success"> Follow </a>
+                    <td th:text="${team.name}" style="padding-top: 40px">Secret</td>
+                    <td th:text="${team.rating}" style="padding-top: 40px">1400</td>
+                    <td th:text="${team.wins}" style="color: #1ba94c; padding-top: 40px">900</td>
+                    <td th:text="${team.losses}" style="color: indianred; padding-top: 40px"></td>
+                    <td th:text="${team.formattedDate}" style="padding-top: 40px"></td>
+                    <td th:switch="${team.following}" style="padding-top: 30px">
+                        <a th:case="false" th:href="@{/new_team/{id}(id=${team.team_id})}" class="btn btn-success" style="width: 87px"> Follow </a>
                         <a th:case="true" th:href="@{/delete/{id}(id=${team.team_id})}" class="btn btn-danger"> Unfollow </a>
                     </td>
 

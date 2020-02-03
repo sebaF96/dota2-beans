@@ -1,13 +1,14 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dota 2 Beans</title>
+    <title>Beans</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
     <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link rel="icon" th:href="@{/images/spring_logo.png}">
 
 </head>
 
@@ -19,7 +20,10 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h1>Dota 2 Beans</h1>
+            <h1 style="margin-bottom: 40px">
+                Beans
+                <img th:src="@{/images/spring_logo.png}" style="width: 10%; height: 10%">
+            </h1>
         </div>
     </div>
 
@@ -32,7 +36,7 @@
             <div class="card-body">
                 <h5 th:text="${team.getName()}" class="card-title"></h5>
                 <p class="card-text"></p>
-                <a th:href="@{/{id}(id=${team.team_id})}" class="btn btn-success">See more</a>
+                <a th:href="@{/{id}(id=${team.team_id})}" class="btn btn-mine">See more</a>
             </div>
         </div>
 

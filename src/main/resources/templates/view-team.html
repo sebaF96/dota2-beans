@@ -1,12 +1,13 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${team.name}"></title>
+    <title th:text="${team.name} + ' - Beans'"></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
     <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link rel="icon" th:href="@{/images/spring_logo.png}">
 
 </head>
 
@@ -75,19 +76,19 @@
                             <td>
                                 <img th:src="${team.logo_url}" style="width: 70px; height: 70px">
                             </td>
-                            <td>vs.</td>
+                            <td style="padding-top: 40px">vs.</td>
                             <td>
                                 <img th:src="${match.opposing_team_logo}" style="width: 70px; height: 70px">
                             </td>
-                            <td th:switch="${match.radiant_win}">
+                            <td th:switch="${match.radiant_win}" style="padding-top: 40px">
                                 <p th:case="true" style="color: #1ba94c"> <b> Win </b></p>
                                 <p th:case="false" style="color: indianred"><b>Loss </b></p>
                             </td>
-                            <td th:text="${match.league_name}"></td>
-                            <td th:text="${match.formattedTime}"></td>
+                            <td th:text="${match.league_name}" style="padding-top: 40px"></td>
+                            <td th:text="${match.formattedTime}" style="padding-top: 40px"></td>
 
-                            <td>
-                                <a th:href="'https://www.dotabuff.com/matches/' + ${match.match_id}" target="_blank">DotaBuff</a>
+                            <td style="padding-top: 40px">
+                                <a th:href="'https://www.dotabuff.com/matches/' + ${match.match_id}" target="_blank" style="color: #1ba94c">DotaBuff</a>
                             </td>
 
                         </tr>
