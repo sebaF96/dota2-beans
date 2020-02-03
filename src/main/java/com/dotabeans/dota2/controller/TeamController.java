@@ -83,28 +83,22 @@ public class TeamController {
     @GetMapping("/matches")
     public String getRecentMatches(Model model) throws IOException {
         List<Long> idsMyTeams = teamRepository.findAll().stream().map(Team::getTeam_id).collect(Collectors.toList());
-        ArrayList<MatchTeamData> matches = new ArrayList<>();
+        HashSet<MatchTeamData> matches = new HashSet<>();
 
         for (Long id : idsMyTeams) {
             ArrayList<MatchTeamData> matchesByTeam = (ArrayList<MatchTeamData>) GetMatchesTeamData.returnTeamMatchesList(id);
             for(int i = 0; i < 10; i++){
                 matchesByTeam.get(i).setActual_team_logo(teamRepository.findById(id).get().getLogo_url());
-                matchesByTeam.get(i).setFormattedTime(utilFunctions.formatDate(matchesByTeam.get(i).getStart_time()));
                 matchesByTeam.get(i).setActual_team_name(teamRepository.findById(id).get().getName());
+                matchesByTeam.get(i).setFormattedTime(utilFunctions.formatDate(matchesByTeam.get(i).getStart_time()));
                 matchesByTeam.get(i).setActual_team_won(matchesByTeam.get(i).getRadiant_win() == matchesByTeam.get(i).getRadiant());
                 matches.add(matchesByTeam.get(i));
             }
         }
 
-        assert false;
-        matches.sort(Comparator.comparing(MatchTeamData::getStart_time));
-        List<MatchTeamData> matchesFinal = matches.stream().distinct().collect(Collectors.toList());
-        Collections.reverse(matchesFinal);
-        matches.clear();
+        List<MatchTeamData> ordered_matches = utilFunctions.getRecentMatches(matches);
 
-        matches = (ArrayList<MatchTeamData>) matchesFinal.stream().limit(50).collect(Collectors.toList());
-
-        model.addAttribute("matches", matches);
+        model.addAttribute("matches", ordered_matches);
         return "recent_matches";
     }
 

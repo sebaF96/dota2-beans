@@ -1,5 +1,7 @@
 package com.dotabeans.dota2.utils;
 
+import com.dotabeans.dota2.model.MatchTeamData;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,6 +10,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class utilFunctions {
 
@@ -50,6 +54,18 @@ public class utilFunctions {
 
         return "" + time_ago + "sec ago";
 
+
+    }
+
+
+    public static List<MatchTeamData> getRecentMatches(Set<MatchTeamData> unordered_matches) {
+
+        ArrayList<MatchTeamData> ordered_matches = new ArrayList<>(unordered_matches);
+
+        ordered_matches.sort(Comparator.comparing(MatchTeamData::getStart_time));
+        Collections.reverse(ordered_matches);
+
+        return ordered_matches.stream().limit(50).collect(Collectors.toList());
 
     }
 }
