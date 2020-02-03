@@ -71,17 +71,16 @@
                     <table class="table table-striped table-dark">
 
                         <tr th:each="match : ${matches}">
-
+                            <td th:switch="${match.actual_team_won}" style="padding-top: 40px">
+                                <img th:case="true" th:src="@{/images/tick.png}" alt="Win">
+                                <img th:case="false" th:src="@{/images/cross.png}" alt="Win">
+                            </td>
                             <td>
                                 <img th:src="${team.logo_url}" style="width: 70px; height: 70px">
                             </td>
                             <td style="padding-top: 40px">vs.</td>
                             <td>
                                 <img th:src="${match.opposing_team_logo}" style="width: 70px; height: 70px">
-                            </td>
-                            <td th:switch="${match.actual_team_won}" style="padding-top: 40px">
-                                <p th:case="true" style="color: #1ba94c"> <b> Win </b></p>
-                                <p th:case="false" style="color: indianred"><b>Loss </b></p>
                             </td>
                             <td th:text="${match.league_name}" style="padding-top: 40px"></td>
                             <td th:text="${match.formattedTime}" style="padding-top: 40px"></td>
