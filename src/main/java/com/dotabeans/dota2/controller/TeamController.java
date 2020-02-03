@@ -49,7 +49,7 @@ public class TeamController {
         List<PlayerData> players = GetPlayerData.getPlayersByTeamId(id);
 
         for (MatchTeamData match : matches) {
-            match.setRadiant_win(match.getRadiant() == match.getRadiant_win());
+            match.setActual_team_won(match.getRadiant() == match.getRadiant_win());
             match.setFormattedTime(utilFunctions.formatDate(match.getStart_time()));
         }
 
@@ -88,9 +88,10 @@ public class TeamController {
         for (Long id : idsMyTeams) {
             ArrayList<MatchTeamData> matchesByTeam = (ArrayList<MatchTeamData>) GetMatchesTeamData.returnTeamMatchesList(id);
             for(int i = 0; i < 10; i++){
-                matchesByTeam.get(i).setActualTeamLogo(teamRepository.findById(id).get().getLogo_url());
-                matchesByTeam.get(i).setRadiant_win(matchesByTeam.get(i).getRadiant() && matchesByTeam.get(i).getRadiant_win());
+                matchesByTeam.get(i).setActual_team_logo(teamRepository.findById(id).get().getLogo_url());
                 matchesByTeam.get(i).setFormattedTime(utilFunctions.formatDate(matchesByTeam.get(i).getStart_time()));
+                matchesByTeam.get(i).setActual_team_name(teamRepository.findById(id).get().getName());
+                matchesByTeam.get(i).setActual_team_won(matchesByTeam.get(i).getRadiant_win() == matchesByTeam.get(i).getRadiant());
                 matches.add(matchesByTeam.get(i));
             }
         }

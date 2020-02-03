@@ -20,7 +20,9 @@ public class MatchTeamData {
     private String opposing_team_name;
     private String opposing_team_logo;
     private String formattedTime;
-    private String actualTeamLogo;
+    private String actual_team_name;
+    private String actual_team_logo;
+    private Boolean actual_team_won;
 
     @Override
     public boolean equals(Object o) {

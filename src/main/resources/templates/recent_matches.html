@@ -16,16 +16,24 @@
             <table class="table table-striped table-dark">
                 <th:block th:each="match : ${matches}">
                     <tr>
-                        <td th:text="${match.start_time}"></td>
-                        <td th:text="${match.match_id}"></td>
-                        <td th:text="${match.formattedTime}"></td>
-                        <td>
-                            <img th:src="${match.actualTeamLogo}" style="width: 80px; height: 80px;">
+                        <td style="text-align: center">
+                            <img th:src="${match.actual_team_logo}" style="width: 80px; height: 80px;">
                         </td>
 
-                        <td>
+                        <td style="text-align: center">
                             <img th:src="${match.opposing_team_logo}" style="width: 80px; height: 80px;">
                         </td>
+
+                        <td th:switch="${match.actual_team_won}">
+                            <p th:case="true" style="color: #1ba94c" th:text="${match.actual_team_name}"></p>
+                            <p th:case="false" style="color: #1ba94c" th:text="${match.opposing_team_name}"></p>
+                        </td>
+
+                        <td th:text="${match.formattedTime}"> </td>
+                        <td th:text="${match.league_name}"></td>
+                        <td> <a href="#">DotaBuff</a></td>
+
+
 
                     </tr>
 
@@ -35,7 +43,7 @@
 
         </div>
     </div>
-    
+
 
 </div>
 
