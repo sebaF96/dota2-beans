@@ -44,8 +44,11 @@
                 </thead>
                 <tbody>
                 <tr th:each="team : ${teams}">
-                    <td style="width: 150px">
+                    <td th:switch="${team.following}" style="width: 150px">
+                        <a th:case="true" th:href="@{/{id}(id=${team.team_id})}">
                         <img th:src="${team.logo_url}" style="width: 80px; height: 80px">
+                        </a>
+                        <img th:case="false" th:src="${team.logo_url}" style="width: 80px; height: 80px">
                     </td>
                     <td th:text="${team.name}" style="padding-top: 40px">Secret</td>
                     <td th:text="${team.rating}" style="padding-top: 40px">1400</td>
