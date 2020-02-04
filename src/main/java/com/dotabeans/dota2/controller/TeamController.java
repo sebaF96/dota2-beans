@@ -50,7 +50,7 @@ public class TeamController {
 
         for (MatchTeamData match : matches) {
             match.setActual_team_won(match.getRadiant() == match.getRadiant_win());
-            match.setFormattedTime(utilFunctions.formatDate(match.getStart_time()));
+            match.setFormattedTime(utilFunctions.formatDate(match.getStart_time() + match.getDuration()));
         }
 
         teamData.setWinrate(teamData.getWins() * 100 / (teamData.getWins() + teamData.getLosses()));
@@ -90,7 +90,7 @@ public class TeamController {
             for(int i = 0; i < 10; i++){
                 matchesByTeam.get(i).setActual_team_logo(teamRepository.findById(id).get().getLogo_url());
                 matchesByTeam.get(i).setActual_team_name(teamRepository.findById(id).get().getName());
-                matchesByTeam.get(i).setFormattedTime(utilFunctions.formatDate(matchesByTeam.get(i).getStart_time()));
+                matchesByTeam.get(i).setFormattedTime(utilFunctions.formatDate(matchesByTeam.get(i).getStart_time() + matchesByTeam.get(i).getDuration()));
                 matchesByTeam.get(i).setActual_team_won(matchesByTeam.get(i).getRadiant_win() == matchesByTeam.get(i).getRadiant());
                 matches.add(matchesByTeam.get(i));
             }

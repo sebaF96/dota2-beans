@@ -35,7 +35,9 @@ public class utilFunctions {
     public static String formatDate(Long timestamp) {
 
         Long time_now = (System.currentTimeMillis() / 1000);
-        long time_ago = time_now - timestamp;
+        long time_ago = time_now - timestamp - 780;
+        // Subtracting 780 seconds that are the average time for a draft,
+        // since (start_time - duration time) just counts the "juego neto" duration.
 
         if (time_ago >= 86400) {
             int days = (int) (time_ago / 86400);

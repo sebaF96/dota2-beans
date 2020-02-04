@@ -14,6 +14,7 @@ public class MatchTeamData {
     private Long match_id;
     private Boolean radiant_win;
     private Boolean radiant;
+    private Integer duration;
     private Long start_time;
     private String league_name;
     private Long opposing_team_id;
