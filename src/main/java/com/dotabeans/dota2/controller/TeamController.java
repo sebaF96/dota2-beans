@@ -8,7 +8,7 @@ import com.dotabeans.dota2.model.Team;
 import com.dotabeans.dota2.model.TeamData;
 import com.dotabeans.dota2.model.PlayerData;
 import com.dotabeans.dota2.repository.TeamRepository;
-import com.dotabeans.dota2.utils.utilFunctions;
+import com.dotabeans.dota2.utils.UtilFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,7 +50,7 @@ public class TeamController {
 
         for (MatchTeamData match : matches) {
             match.setActual_team_won(match.getRadiant() == match.getRadiant_win());
-            match.setFormattedTime(utilFunctions.formatDate(match.getStart_time() + match.getDuration()));
+            match.setFormattedTime(UtilFunctions.formatDate(match.getStart_time() + match.getDuration()));
         }
 
         teamData.setWinrate(teamData.getWins() * 100 / (teamData.getWins() + teamData.getLosses()));
@@ -73,7 +73,7 @@ public class TeamController {
             if (followedTeams.contains(team.getTeam_id())) {
                 team.setFollowing(true);
             }
-            team.setFormattedDate(utilFunctions.formatDate(team.getLast_match_time()));
+            team.setFormattedDate(UtilFunctions.formatDate(team.getLast_match_time()));
         }
 
         model.addAttribute("teams", teams);
@@ -82,21 +82,26 @@ public class TeamController {
 
     @GetMapping("/matches")
     public String getRecentMatches(Model model) throws IOException {
-        List<Long> idsMyTeams = teamRepository.findAll().stream().map(Team::getTeam_id).collect(Collectors.toList());
+
+        List<Long> idsMyTeams = teamRepository.findAll().parallelStream().map(Team::getTeam_id).collect(Collectors.toList());
         HashSet<MatchTeamData> matches = new HashSet<>();
 
         for (Long id : idsMyTeams) {
-            ArrayList<MatchTeamData> matchesByTeam = (ArrayList<MatchTeamData>) GetMatchesTeamData.returnTeamMatchesList(id);
-            for(int i = 0; i < 10; i++){
-                matchesByTeam.get(i).setActual_team_logo(teamRepository.findById(id).get().getLogo_url());
-                matchesByTeam.get(i).setActual_team_name(teamRepository.findById(id).get().getName());
-                matchesByTeam.get(i).setFormattedTime(utilFunctions.formatDate(matchesByTeam.get(i).getStart_time() + matchesByTeam.get(i).getDuration()));
-                matchesByTeam.get(i).setActual_team_won(matchesByTeam.get(i).getRadiant_win() == matchesByTeam.get(i).getRadiant());
-                matches.add(matchesByTeam.get(i));
+
+            List<MatchTeamData> matchesByTeam = GetMatchesTeamData.returnTeamMatchesList(id).stream().limit(10).collect(Collectors.toList());
+            for(MatchTeamData match : matchesByTeam){
+                if(matches.contains(match)) continue;
+
+                match.setActual_team_logo(teamRepository.findById(id).get().getLogo_url());
+                match.setActual_team_name(teamRepository.findById(id).get().getName());
+                match.setFormattedTime(UtilFunctions.formatDate(match.getStart_time() + match.getDuration()));
+                match.setActual_team_won(match.getRadiant_win() == match.getRadiant());
+                matches.add(match);
             }
+
         }
 
-        List<MatchTeamData> ordered_matches = utilFunctions.getRecentMatches(matches);
+        List<MatchTeamData> ordered_matches = UtilFunctions.getRecentMatches(matches);
 
         model.addAttribute("matches", ordered_matches);
         return "recent_matches";

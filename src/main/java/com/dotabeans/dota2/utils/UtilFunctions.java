@@ -7,13 +7,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class utilFunctions {
+public class UtilFunctions {
 
     public static StringBuilder getJsonDataFromUrl(String url) throws IOException {
         URL urlObj = new URL(url);

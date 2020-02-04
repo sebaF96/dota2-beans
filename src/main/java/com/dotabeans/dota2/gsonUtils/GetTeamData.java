@@ -1,8 +1,7 @@
 package com.dotabeans.dota2.gsonUtils;
 
-import com.dotabeans.dota2.model.Team;
 import com.dotabeans.dota2.model.TeamData;
-import com.dotabeans.dota2.utils.utilFunctions;
+import com.dotabeans.dota2.utils.UtilFunctions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -19,7 +18,7 @@ public class GetTeamData {
 
         String url = "https://api.opendota.com/api/teams/" + id.toString();
 
-        StringBuilder sb = utilFunctions.getJsonDataFromUrl(url);
+        StringBuilder sb = UtilFunctions.getJsonDataFromUrl(url);
 
         Gson gson = new Gson();
 
@@ -30,7 +29,7 @@ public class GetTeamData {
     public static List<TeamData> listAllTeams() throws IOException{
         String url = "https://api.opendota.com/api/teams";
 
-        StringBuilder sb = utilFunctions.getJsonDataFromUrl(url);
+        StringBuilder sb = UtilFunctions.getJsonDataFromUrl(url);
         Gson gson = new Gson();
 
         List<TeamData> teams = gson.fromJson(sb.toString(), new TypeToken<List<TeamData>>(){}.getType());

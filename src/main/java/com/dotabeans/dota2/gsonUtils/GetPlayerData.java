@@ -1,7 +1,7 @@
 package com.dotabeans.dota2.gsonUtils;
 
 import com.dotabeans.dota2.model.PlayerData;
-import com.dotabeans.dota2.utils.utilFunctions;
+import com.dotabeans.dota2.utils.UtilFunctions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -14,7 +14,7 @@ public class GetPlayerData {
 
         String url = "https://api.opendota.com/api/teams/" + id.toString() + "/players";
 
-        StringBuilder sb = utilFunctions.getJsonDataFromUrl(url);
+        StringBuilder sb = UtilFunctions.getJsonDataFromUrl(url);
         Gson gson = new Gson();
         List<PlayerData> players = gson.fromJson(sb.toString(), new TypeToken<List<PlayerData>>(){}.getType());
 
