@@ -31,7 +31,9 @@
                 <th:block th:each="match : ${matches}">
                     <tr>
                         <td style="text-align: center">
-                            <img th:src="${match.actual_team_logo}" style="width: 80px; height: 80px;">
+                            <a th:href="@{/{id}(id=${match.actual_team_id})}">
+                                <img th:src="${match.actual_team_logo}" style="width: 80px; height: 80px;">
+                            </a>
                         </td>
 
                         <td th:switch="${match.actual_team_won}" style="padding-top: 40px; text-align: left">
@@ -40,13 +42,15 @@
                         </td>
 
                         <td th:switch="${match.actual_team_won}" style="padding-top: 40px; text-align: right">
-                            <p th:case="true" style="color: indianred"></p>
+                            <p th:case="true"></p>
                             <img th:case="false" th:src="@{/images/tick.png}" alt="Win">
                         </td>
 
 
                         <td style="text-align: center ">
-                            <img th:src="${match.opposing_team_logo}" style="width: 80px; height: 80px;">
+                            <a th:href="@{/{id}(id=${match.opposing_team_id})}">
+                                <img th:src="${match.opposing_team_logo}" style="width: 80px; height: 80px;">
+                            </a>
                         </td>
 
                         <td th:text="${match.formattedTime}" style="padding-top: 40px"> </td>

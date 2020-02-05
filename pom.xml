@@ -10,9 +10,9 @@
     </parent>
     <groupId>com.dotabeans</groupId>
     <artifactId>dota2</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.0.1-RELEASE</version>
     <name>Beans</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Dota 2 project consuming the OpenDota Apo</description>
 
     <properties>
         <java.version>1.8</java.version>

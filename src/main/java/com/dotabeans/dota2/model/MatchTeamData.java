@@ -24,6 +24,7 @@ public class MatchTeamData {
     private String actual_team_name;
     private String actual_team_logo;
     private Boolean actual_team_won;
+    private Long actual_team_id;
 
     @Override
     public boolean equals(Object o) {
