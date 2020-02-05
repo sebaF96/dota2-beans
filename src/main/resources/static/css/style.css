@@ -4,11 +4,9 @@ h1{
     text-shadow: 4px 4px 4px #aaa;
     font-size: 100px;
     text-align: center;
+    margin-bottom: 40px
 }
 
-.card{
-    border: 2px solid #1ba94c ;
-}
 
 .card-title{
     font-family: 'Raleway', sans-serif;

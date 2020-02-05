@@ -20,8 +20,7 @@
 <div class="container-fluid">
 <div class="row">
     <div class="col-md-12">
-        <h1 style="text-align: center">Teams list</h1>
-	<hr>
+        <h1>Teams list</h1>
     </div>
 </div>
 
@@ -32,28 +31,38 @@
 
             <table class="table table-dark table-striped">
                 <thead>
-                <tr>
-                    <td style="color: #1ba94c"><b>Logo </b></td>
-                    <td style="color: #1ba94c"><b>Name</b></td>
-                    <td style="color: #1ba94c"><b>Rating</b></td>
-                    <td style="color: #1ba94c"><b>Wins</b></td>
-                    <td style="color: #1ba94c"><b>Loses</b></td>
-                    <td style="color: #1ba94c"><b>Last match</b></td>
-                    <td style="color: #1ba94c"><b>Add</b></td>
+                <tr style="background-color: #1c1919">
+                    <td style="color: white"><b>Rank</b></td>
+                    <td style="color: white"><b>Logo </b></td>
+                    <td style="color: white"><b>Name</b></td>
+                    <td style="color: white"><b>Rating</b></td>
+                    <td style="color: white"><b>Wins</b></td>
+                    <td style="color: white"><b>Loses</b></td>
+                    <td style="color: white"><b>Last match</b></td>
+                    <td style="color: white"><b>Add</b></td>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="team : ${teams}">
+
+                        <td style="padding-top: 40px">
+                            <img th:if="${teamStat.count eq 1}" th:src="@{/images/Gold.png}" alt="gold">
+                            <img th:if="${teamStat.count} eq 2" th:src="@{/images/Silver.png}" alt="silver">
+                            <img th:if="${teamStat.count} eq 3" th:src="@{/images/Bronze.png}" alt="bronze">
+                            <p th:if="${teamStat.count} gt 3 and ${teamStat.count} lt 46" th:text="${teamStat.count}"></p>
+                            <img th:if="${teamStat.count} gt 45" th:src="@{/images/danger.png}" alt="danger zone">
+                        </td>
+
                     <td th:switch="${team.following}" style="width: 150px">
                         <a th:case="true" th:href="@{/{id}(id=${team.team_id})}">
-                        <img th:src="${team.logo_url}" style="width: 80px; height: 80px">
+                        <img th:src="${team.logo_url}" style="width: 80px; height: 80px" alt="team image">
                         </a>
-                        <img th:case="false" th:src="${team.logo_url}" style="width: 80px; height: 80px">
+                        <img th:case="false" th:src="${team.logo_url}" style="width: 80px; height: 80px" alt="team image">
                     </td>
                     <td th:text="${team.name}" style="padding-top: 40px">Secret</td>
                     <td th:text="${team.rating}" style="padding-top: 40px">1400</td>
-                    <td th:text="${team.wins}" style="color: #1ba94c; padding-top: 40px">900</td>
-                    <td th:text="${team.losses}" style="color: indianred; padding-top: 40px"></td>
+                    <td th:text="${team.wins}" style="color: #08ff00; padding-top: 40px">900</td>
+                    <td th:text="${team.losses}" style="color: #f44444; padding-top: 40px"></td>
                     <td th:text="${team.formattedDate}" style="padding-top: 40px"></td>
                     <td th:switch="${team.following}" style="padding-top: 30px">
                         <a th:case="false" th:href="@{/new_team/{id}(id=${team.team_id})}" class="btn btn-success" style="width: 87px"> Follow </a>
