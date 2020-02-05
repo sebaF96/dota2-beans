@@ -40,11 +40,13 @@ public class TeamController {
         return "index";
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
+
     @GetMapping("/{id}")
     public String viewTeam(@PathVariable Long id, Model model) throws IOException {
         List<MatchTeamData> matches = GetMatchesTeamData.returnTeamMatchesList(id);
         Optional<Team> team = teamRepository.findById(id);
+        if (!team.isPresent()) return "redirect:";
+
         TeamData teamData = GetTeamData.returnTeamData(id);
         List<PlayerData> players = GetPlayerData.getPlayersByTeamId(id);
 
@@ -88,8 +90,8 @@ public class TeamController {
 
         for (Long id : idsMyTeams) {
             List<MatchTeamData> matchesByTeam = GetMatchesTeamData.returnTeamMatchesList(id).stream().limit(10).collect(Collectors.toList());
-            for(MatchTeamData match : matchesByTeam){
-                if(matches.contains(match)) continue;
+            for (MatchTeamData match : matchesByTeam) {
+                if (matches.contains(match)) continue;
                 match.setActual_team_logo(teamRepository.findById(id).get().getLogo_url());
                 match.setActual_team_name(teamRepository.findById(id).get().getName());
                 match.setFormattedTime(UtilFunctions.formatDate(match.getStart_time() + match.getDuration()));
@@ -120,12 +122,16 @@ public class TeamController {
 
     @PostMapping("add")
     public RedirectView addTeam(@Valid Team team) throws IOException {
-        TeamData teamData = GetTeamData.returnTeamData(team.getTeam_id());
-        team.setName(teamData.getName());
-        team.setLogo_url(teamData.getLogo_url());
+        try {
+            TeamData teamData = GetTeamData.returnTeamData(team.getTeam_id());
+            team.setName(teamData.getName());
+            team.setLogo_url(teamData.getLogo_url());
 
-        teamRepository.save(team);
-        return new RedirectView("/" + team.getTeam_id());
+            teamRepository.save(team);
+            return new RedirectView("/" + team.getTeam_id());
+        }catch (NullPointerException e){
+            return new RedirectView("/");
+        }
     }
 
     @GetMapping("delete/{id}")
