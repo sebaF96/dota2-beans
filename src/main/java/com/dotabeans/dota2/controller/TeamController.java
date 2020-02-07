@@ -56,7 +56,10 @@ public class TeamController {
         }
 
         teamData.setWinrate(teamData.getWins() * 100 / (teamData.getWins() + teamData.getLosses()));
+        Integer last20victory = (Math.toIntExact(matches.stream().filter(MatchTeamData::getActual_team_won).count()) * 5);
 
+
+        model.addAttribute("victorys", last20victory);
         model.addAttribute("team", team.get());
         model.addAttribute("teamdata", teamData);
         model.addAttribute("matches", matches);
