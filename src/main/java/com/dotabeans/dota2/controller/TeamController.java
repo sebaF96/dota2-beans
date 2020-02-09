@@ -42,42 +42,40 @@ public class TeamController {
 
 
     @GetMapping("/{id}")
-    public String viewTeam(@PathVariable Long id, Model model) throws IOException {
-        List<MatchTeamData> matches = GetMatchesTeamData.returnTeamMatchesList(id);
-        Optional<Team> team = teamRepository.findById(id);
-        if (!team.isPresent()) return "redirect:";
+    public String viewTeam(@PathVariable Long id, Model model) throws IOException, NullPointerException {
+        try {
+            List<MatchTeamData> matches = GetMatchesTeamData.returnTeamMatchesList(id);
+            TeamData teamData = GetTeamData.returnTeamData(id);
+            List<PlayerData> players = GetPlayerData.getPlayersByTeamId(id);
+            teamData.setFollowing(teamRepository.findById(id).isPresent());
 
-        TeamData teamData = GetTeamData.returnTeamData(id);
-        List<PlayerData> players = GetPlayerData.getPlayersByTeamId(id);
+            for (MatchTeamData match : matches) {
+                match.setActual_team_won(match.getRadiant() == match.getRadiant_win());
+                match.setFormattedTime(UtilFunctions.formatDate(match.getStart_time() + match.getDuration()));
+            }
 
-        for (MatchTeamData match : matches) {
-            match.setActual_team_won(match.getRadiant() == match.getRadiant_win());
-            match.setFormattedTime(UtilFunctions.formatDate(match.getStart_time() + match.getDuration()));
+            teamData.setWinrate(teamData.getWins() * 100 / (teamData.getWins() + teamData.getLosses()));
+            Integer last20victory = (Math.toIntExact(matches.stream().filter(MatchTeamData::getActual_team_won).count()) * 5);
+
+
+            model.addAttribute("victorys", last20victory);
+            model.addAttribute("teamdata", teamData);
+            model.addAttribute("matches", matches);
+            model.addAttribute("players", players);
+
+            return "view-team";
+        } catch (NullPointerException e) {
+            return "redirect:";
         }
-
-        teamData.setWinrate(teamData.getWins() * 100 / (teamData.getWins() + teamData.getLosses()));
-        Integer last20victory = (Math.toIntExact(matches.stream().filter(MatchTeamData::getActual_team_won).count()) * 5);
-
-
-        model.addAttribute("victorys", last20victory);
-        model.addAttribute("team", team.get());
-        model.addAttribute("teamdata", teamData);
-        model.addAttribute("matches", matches);
-        model.addAttribute("players", players);
-
-        return "view-team";
 
     }
 
     @GetMapping("/all")
     public String listAllTeams(Model model) throws IOException {
         List<TeamData> teams = GetTeamData.listAllTeams();
-        List<Long> followedTeams = teamRepository.findAll().stream().map(Team::getTeam_id).collect(Collectors.toList());
 
         for (TeamData team : teams) {
-            if (followedTeams.contains(team.getTeam_id())) {
-                team.setFollowing(true);
-            }
+            team.setFollowing(teamRepository.findById(team.getTeam_id()).isPresent());
             team.setFormattedDate(UtilFunctions.formatDate(team.getLast_match_time()));
         }
 
@@ -132,7 +130,7 @@ public class TeamController {
 
             teamRepository.save(team);
             return new RedirectView("/" + team.getTeam_id());
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             return new RedirectView("/");
         }
     }

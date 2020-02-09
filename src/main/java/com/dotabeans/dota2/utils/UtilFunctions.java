@@ -33,7 +33,7 @@ public class UtilFunctions {
 
         Long time_now = (System.currentTimeMillis() / 1000);
         long time_ago = time_now - timestamp - 960;
-        // Subtracting 960 seconds that are the average time for a draft,
+        // Subtracting 960 seconds that is the average time for a draft,
         // since (start_time - duration time) just counts the "juego neto" duration.
 
         if (time_ago >= 86400) {

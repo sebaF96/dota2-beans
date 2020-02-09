@@ -48,7 +48,7 @@
 
                         <td style="text-align: center ">
                             <a th:href="@{/{id}(id=${match.opposing_team_id})}">
-                                <img th:src="${match.opposing_team_logo}" style="width: 80px; height: 80px;">
+                                <img th:src="${match.opposing_team_logo}" th:alt="${match.opposing_team_name}" style="width: 80px; height: 80px;">
                             </a>
                         </td>
 

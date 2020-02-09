@@ -53,11 +53,10 @@
                             <img th:if="${teamStat.count} gt 45" th:src="@{/images/danger.png}" alt="danger zone">
                         </td>
 
-                    <td th:switch="${team.following}" style="width: 150px">
-                        <a th:case="true" th:href="@{/{id}(id=${team.team_id})}">
-                        <img th:src="${team.logo_url}" style="width: 80px; height: 80px" alt="team image">
+                    <td style="width: 150px">
+                        <a th:href="@{/{id}(id=${team.team_id})}">
+                        <img th:src="${team.logo_url}" style="width: 80px; height: 80px" th:alt="${team.name}">
                         </a>
-                        <img th:case="false" th:src="${team.logo_url}" style="width: 80px; height: 80px" alt="team image">
                     </td>
                     <td th:text="${team.name}" style="padding-top: 40px">Secret</td>
                     <td th:text="${team.rating}" style="padding-top: 40px">1400</td>

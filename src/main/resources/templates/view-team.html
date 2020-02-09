@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${team.name} + ' - Beans'"></title>
+    <title th:text="${teamdata.name} + ' - Beans'"></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -35,9 +35,9 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="card" style="width: 18rem;">
-                                    <img th:src="${team.getLogo_url()}" class="card-img-top" alt="Card image cap" style="background-color: black">
+                                    <img th:src="${teamdata.logo_url}" class="card-img-top" alt="Card image cap" style="background-color: black">
                                     <div class="card-body">
-                                        <h3 th:text="${team.name}" class="card-title"></h3>
+                                        <h3 th:text="${teamdata.name}" class="card-title"></h3>
                                     </div>
                                     <ul class="list-group list-group-flush">
                                         <li th:text="'Team Wins: ' + ${teamdata.getWins()}" class="list-group-item list-group-item-success"></li>
@@ -46,7 +46,10 @@
                                         <li th:text="'Team Winrate: ' + ${teamdata.getWinrate()} + ' %'" class="list-group-item"></li>
                                     </ul>
                                     <div class="card-body">
-                                        <a th:href="@{/delete/{id}(id=${team.team_id})}" class="btn btn-danger">Unfollow</a>
+                                        <th:block th:switch="${teamdata.following}">
+                                            <a th:case="true" th:href="@{/delete/{id}(id=${teamdata.team_id})}" class="btn btn-danger">Unfollow</a>
+                                            <a th:case="false" th:href="@{/new_team/{id}(id=${teamdata.team_id})}" class="btn btn-success" style="width: 87px">Follow</a>
+                                        </th:block>
                                     </div>
                                 </div>
 
@@ -81,11 +84,13 @@
                                 <img th:case="false" th:src="@{/images/cross.png}" alt="Win">
                             </td>
                             <td>
-                                <img th:src="${team.logo_url}" style="width: 70px; height: 70px">
+                                <img th:src="${teamdata.logo_url}" style="width: 70px; height: 70px">
                             </td>
                             <td style="padding-top: 40px">vs.</td>
                             <td>
-                                <img th:src="${match.opposing_team_logo}" style="width: 70px; height: 70px">
+                                <a th:href="@{/{id}(id=${match.opposing_team_id})}">
+                                    <img th:src="${match.opposing_team_logo}" th:alt="${match.opposing_team_name}" style="width: 70px; height: 70px">
+                                </a>
                             </td>
                             <td th:text="${match.league_name}" style="padding-top: 40px"></td>
                             <td th:text="${match.formattedTime}" style="padding-top: 40px"></td>
