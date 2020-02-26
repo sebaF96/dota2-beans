@@ -21,7 +21,7 @@ target/
 /target
 /HELP.md
 /src/test
-
+/src/main/resources/application.properties
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
