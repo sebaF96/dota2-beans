@@ -54,11 +54,7 @@
 
                         <td th:text="${match.formattedTime}" style="padding-top: 40px"> </td>
 
-                        <td style="padding-top: 40px">
-                            <a th:href="'https://www.duckduckgo.com/?q=\liquipedia dota 2 ' + ${match.league_name}"
-                               th:target="_blank" th:text="${match.league_name}" style="color: royalblue">
-                            </a>
-                        </td>
+                        <td style="padding-top: 40px" th:text="${match.league_name}"> ESL ONE</td>
                         <td style="padding-top: 40px">
                             <a th:href="'https://www.dotabuff.com/matches/' + ${match.match_id}" target="_blank"
                                style="color: #ED3B1C">DotaBuff</a>
