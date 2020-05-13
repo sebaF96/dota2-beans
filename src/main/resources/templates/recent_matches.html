@@ -53,9 +53,17 @@
                         </td>
 
                         <td th:text="${match.formattedTime}" style="padding-top: 40px"> </td>
-                        <td th:text="${match.league_name}" style="padding-top: 40px"></td>
+
                         <td style="padding-top: 40px">
-                            <a th:href="'https://www.dotabuff.com/matches/' + ${match.match_id}" target="_blank" style="color: #1ba94c">DotaBuff</a>
+                            <a th:href="'https://www.duckduckgo.com/?q=\liquipedia dota 2 ' + ${match.league_name}"
+                               th:target="_blank" th:text="${match.league_name}" style="color: royalblue">
+                            </a>
+                        </td>
+                        <td style="padding-top: 40px">
+                            <a th:href="'https://www.dotabuff.com/matches/' + ${match.match_id}" target="_blank"
+                               style="color: #ED3B1C">DotaBuff</a>
+                            <a th:href="'https://www.opendota.com/matches/' + ${match.match_id}" target="_blank"
+                               style="color: lightseagreen">OpenDota</a>
                         </td>
 
 
