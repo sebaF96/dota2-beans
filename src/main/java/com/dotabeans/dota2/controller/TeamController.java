@@ -35,8 +35,9 @@ public class TeamController {
     }
 
     @GetMapping({"", "/"})
-    public String showUpdateForm(Model model) {
+    public String showUpdateForm(Model model) throws IOException {
         model.addAttribute("teams", teamRepository.findAll());
+        model.addAttribute("proMatches", GetMatchesTeamData.getProMatches());
         return "index";
     }
 

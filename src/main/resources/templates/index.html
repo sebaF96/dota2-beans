@@ -29,24 +29,71 @@
 
 
     <div class="row">
+        <div class="col-md-12">
+            <div class="row">
 
-        <div class="col-md-3" th:each="team : ${teams}">
+                <div class="col-md-3" th:each="team : ${teams}">
 
-        <div class="card" style="width: 18rem; margin-top: 25px">
-            <img th:src="${team.getLogo_url()}" class="card-img-top" alt="..." style="background-color: black">
-            <div class="card-body">
-                <h5 th:text="${team.getName()}" class="card-title"></h5>
-                <p class="card-text"></p>
-                <a th:href="@{/{id}(id=${team.team_id})}" class="btn btn-mine">See more</a>
+                    <div class="card" style="width: 18rem; margin-top: 25px">
+                        <img th:src="${team.getLogo_url()}" class="card-img-top" alt="..."
+                             style="background-color: black">
+                        <div class="card-body">
+                            <h5 th:text="${team.getName()}" class="card-title"></h5>
+                            <p class="card-text"></p>
+                            <a th:href="@{/{id}(id=${team.team_id})}" class="btn btn-mine">See more</a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-
-        </div>
-
-
-
-
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 style="margin-top: 50px">
+                Pro matches
+                <img th:src="@{/images/spring_logo.png}" style="width: 110px; height: 110px">
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <table class="table table-dark table-striped" style="margin-top: 25px; margin-left: -15px">
+
+                <thead>
+                <tr style="background-color: #1c1919">
+                    <td style="color: white"><b>Radiant</b></td>
+                    <td style="color: white"><b>R. score </b></td>
+                    <td style="color: white"><b></b></td>
+                    <td style="color: white"><b>Duration</b></td>
+                    <td style="color: white"><b></b></td>
+                    <td style="color: white"><b>D. score</b></td>
+                    <td style="color: white"><b>Dire</b></td>
+                    <td style="color: white"><b>Time</b></td>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="match : ${proMatches}">
+                    <td style="max-width: 100px" th:text="${match.radiant_name}"></td>
+                    <td th:text="${match.radiant_score}">2</td>
+
+                    <td th:text="${match.dire_score}">23</td>
+                    <td style="max-width: 100px" th:text="${match.dire_name}">Secret</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+</div>
 
 </div>
 
