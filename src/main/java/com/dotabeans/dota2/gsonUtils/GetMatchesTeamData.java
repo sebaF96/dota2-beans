@@ -39,17 +39,19 @@ public class GetMatchesTeamData {
         List<ProMatch> proMatchesList = gson.fromJson(sb.toString(), new TypeToken<List<ProMatch>>() {
         }.getType());
 
-        for (ProMatch match : proMatchesList) {
-            match.setFormattedTime(UtilFunctions.formatDate(match.getStart_time() + match.getDuration()));
-            match.setFormattedDuration(UtilFunctions.formatDuration(match.getDuration()));
-        }
-
-        return proMatchesList
+        List<ProMatch> proMatchesFilteredList = proMatchesList
                 .stream()
                 .filter(m -> m.getDire_name() != null && m.getRadiant_name() != null)
                 .filter(m -> m.getDire_team_id() != null && m.getRadiant_team_id() != null)
                 .limit(50)
                 .collect(Collectors.toList());
+
+        for (ProMatch match : proMatchesFilteredList) {
+            match.setFormattedTime(UtilFunctions.formatDate(match.getStart_time() + match.getDuration()));
+            match.setFormattedDuration(UtilFunctions.formatDuration(match.getDuration()));
+        }
+
+        return proMatchesFilteredList;
     }
 
 }
