@@ -17,7 +17,10 @@ public class ProMatch {
     private String radiant_name;
     private Integer dire_team_id;
     private String dire_name;
+    private String league_name;
     private Integer radiant_score;
     private Integer dire_score;
     private Boolean radiant_win;
+    private String formattedTime;
+    private String formattedDuration;
 }

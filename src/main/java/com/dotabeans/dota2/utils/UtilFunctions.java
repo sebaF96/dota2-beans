@@ -2,6 +2,7 @@ package com.dotabeans.dota2.utils;
 
 import com.dotabeans.dota2.model.MatchTeamData;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -65,6 +66,15 @@ public class UtilFunctions {
         Collections.reverse(ordered_matches);
 
         return ordered_matches.stream().limit(50).collect(Collectors.toList());
+
+    }
+
+    public static String formatDuration(Integer duration) {
+
+        int seconds = duration % 60;
+        int minutes = (duration - seconds) / 60;
+
+        return seconds >= 10 ? "" + minutes + ":" + seconds : "" + minutes + ":0" + seconds;
 
     }
 }

@@ -39,6 +39,11 @@ public class GetMatchesTeamData {
         List<ProMatch> proMatchesList = gson.fromJson(sb.toString(), new TypeToken<List<ProMatch>>() {
         }.getType());
 
+        for (ProMatch match : proMatchesList) {
+            match.setFormattedTime(UtilFunctions.formatDate(match.getStart_time() + match.getDuration()));
+            match.setFormattedDuration(UtilFunctions.formatDuration(match.getDuration()));
+        }
+
         return proMatchesList
                 .stream()
                 .filter(m -> m.getDire_name() != null && m.getRadiant_name() != null)
