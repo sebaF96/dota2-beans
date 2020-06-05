@@ -85,7 +85,7 @@ public class TeamController {
     }
 
     @GetMapping("/matches")
-    public String getRecentMatches(Model model) throws IOException {
+    public String getRecentMatches(Model model) throws InterruptedException {
 
         List<Long> idsMyTeams = teamRepository.findAll().stream().map(Team::getTeam_id).collect(Collectors.toList());
         Set<Long> finishedTeams = Collections.synchronizedSet(new HashSet<>());
@@ -117,7 +117,7 @@ public class TeamController {
         }
 
         while (finishedTeams.size() != idsMyTeams.size()) {
-            continue;
+            Thread.sleep(250);
         }
 
 
