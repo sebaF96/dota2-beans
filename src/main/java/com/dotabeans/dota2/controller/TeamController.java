@@ -87,22 +87,40 @@ public class TeamController {
     @GetMapping("/matches")
     public String getRecentMatches(Model model) throws IOException {
 
-        List<Long> idsMyTeams = teamRepository.findAll().parallelStream().map(Team::getTeam_id).collect(Collectors.toList());
-        HashSet<MatchTeamData> matches = new HashSet<>();
+        List<Long> idsMyTeams = teamRepository.findAll().stream().map(Team::getTeam_id).collect(Collectors.toList());
+        Set<Long> finishedTeams = Collections.synchronizedSet(new HashSet<>());
+        Set<MatchTeamData> matches = Collections.synchronizedSet(new HashSet<>());
 
         for (Long id : idsMyTeams) {
-            List<MatchTeamData> matchesByTeam = GetMatchesTeamData.returnTeamMatchesList(id).stream().limit(10).collect(Collectors.toList());
-            for (MatchTeamData match : matchesByTeam) {
-                if (matches.contains(match)) continue;
-                match.setActual_team_logo(teamRepository.findById(id).get().getLogo_url());
-                match.setActual_team_name(teamRepository.findById(id).get().getName());
-                match.setFormattedTime(UtilFunctions.formatDate(match.getStart_time() + match.getDuration()));
-                match.setActual_team_won(match.getRadiant_win() == match.getRadiant());
-                match.setActual_team_id(id);
-                matches.add(match);
-            }
+            Runnable getAndSetMatches = () -> {
+                List<MatchTeamData> matchesByTeam = null;
+                try {
+                    matchesByTeam = GetMatchesTeamData.returnTeamMatchesList(id).stream().limit(10).collect(Collectors.toList());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                assert matchesByTeam != null;
+                for (MatchTeamData match : matchesByTeam) {
+                    if (matches.contains(match)) continue;
+                    match.setActual_team_logo(teamRepository.findById(id).get().getLogo_url());
+                    match.setActual_team_name(teamRepository.findById(id).get().getName());
+                    match.setFormattedTime(UtilFunctions.formatDate(match.getStart_time() + match.getDuration()));
+                    match.setActual_team_won(match.getRadiant_win() == match.getRadiant());
+                    match.setActual_team_id(id);
+                    matches.add(match);
+                }
+                finishedTeams.add(id);
 
+            };
+            Thread teamThread = new Thread(getAndSetMatches);
+            teamThread.start();
         }
+
+        while (finishedTeams.size() != idsMyTeams.size()) {
+            continue;
+        }
+
+
         List<MatchTeamData> ordered_matches = UtilFunctions.getRecentMatches(matches);
         model.addAttribute("matches", ordered_matches);
         return "recent_matches";
