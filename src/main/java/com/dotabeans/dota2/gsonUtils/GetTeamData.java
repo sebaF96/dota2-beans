@@ -36,7 +36,7 @@ public class GetTeamData {
         teams.sort(Comparator.comparing(TeamData::getRating));
         Collections.reverse(teams);
         return teams.stream().
-                filter(t -> t.getLast_match_time() > 1577836800)    // Teams that have played this year (2020)
+                filter(t -> t.getLast_match_time() > 1611459829)    // Teams that have played this year (2021)
                 .limit(50)
                 .collect(Collectors.toList());
     }
